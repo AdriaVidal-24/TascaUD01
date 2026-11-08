@@ -1,15 +1,19 @@
 package cat.paucasesnoves.lloguerjocs.interficie;
 
+import cat.paucasesnoves.lloguerjocs.dto.EstatLloguer;
 import cat.paucasesnoves.lloguerjocs.dto.Lloguer;
 import cat.paucasesnoves.lloguerjocs.interficie.models.ModelTaulaLloguers;
 import cat.paucasesnoves.lloguerjocs.interficie.models.RenderitzadorEstat;
 import cat.paucasesnoves.lloguerjocs.logica.LogicaNegoci;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class FinestraPrincipal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FinestraPrincipal.class.getName());
 
+    private ResourceBundle textos = ResourceBundle.getBundle("cat/paucasesnoves/lloguerjocs/interficie/Bundle");
     private ModelTaulaLloguers modelTaula;
 
     public FinestraPrincipal() {
@@ -22,6 +26,11 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         List<Lloguer> lloguers = LogicaNegoci.getLloguers();
         modelTaula = new ModelTaulaLloguers(lloguers);
         jTableLloguers.setModel(modelTaula);
+        jLabelTotal.setText(MessageFormat.format(textos.getString("FinestraPrincipal.total"), lloguers.size()));
+        jLabelResum.setText(MessageFormat.format(textos.getString("FinestraPrincipal.resum"),
+                LogicaNegoci.comptarLloguers(EstatLloguer.ACTIU),
+                LogicaNegoci.comptarLloguers(EstatLloguer.FORA_DE_TERMINI),
+                LogicaNegoci.comptarLloguers(EstatLloguer.RETORNAT)));
     }
 
     @SuppressWarnings("unchecked")
@@ -31,6 +40,8 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jLabelTitol = new javax.swing.JLabel();
         jScrollPaneLloguers = new javax.swing.JScrollPane();
         jTableLloguers = new javax.swing.JTable();
+        jLabelTotal = new javax.swing.JLabel();
+        jLabelResum = new javax.swing.JLabel();
         jMenuBarPrincipal = new javax.swing.JMenuBar();
         jMenuLloguer = new javax.swing.JMenu();
         jMenuItemRegistrarLloguer = new javax.swing.JMenuItem();
@@ -50,6 +61,11 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jLabelTitol.setText(bundle.getString("FinestraPrincipal.jLabelTitol.text"));
 
         jScrollPaneLloguers.setViewportView(jTableLloguers);
+
+        jLabelTotal.setText(bundle.getString("FinestraPrincipal.jLabelTotal.text"));
+
+        jLabelResum.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelResum.setText(bundle.getString("FinestraPrincipal.jLabelResum.text"));
 
         jMenuLloguer.setText(bundle.getString("FinestraPrincipal.jMenuLloguer.text"));
 
@@ -91,7 +107,11 @@ public class FinestraPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTitol)
-                    .addComponent(jScrollPaneLloguers, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE))
+                    .addComponent(jScrollPaneLloguers, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelTotal)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabelResum)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -101,6 +121,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabelTitol)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneLloguers, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTotal)
+                    .addComponent(jLabelResum))
                 .addContainerGap())
         );
 
@@ -124,7 +148,9 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelResum;
     private javax.swing.JLabel jLabelTitol;
+    private javax.swing.JLabel jLabelTotal;
     private javax.swing.JMenuBar jMenuBarPrincipal;
     private javax.swing.JMenuItem jMenuItemCrearJoc;
     private javax.swing.JMenuItem jMenuItemCrearUsuari;
