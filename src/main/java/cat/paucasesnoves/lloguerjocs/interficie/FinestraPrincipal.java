@@ -147,6 +147,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jMenuJoc.add(jMenuItemCrearJoc);
 
         jMenuItemEsborrarJoc.setText(bundle.getString("FinestraPrincipal.jMenuItemEsborrarJoc.text"));
+        jMenuItemEsborrarJoc.addActionListener(this::jMenuItemEsborrarJocActionPerformed);
         jMenuJoc.add(jMenuItemEsborrarJoc);
 
         jMenuBarPrincipal.add(jMenuJoc);
@@ -219,6 +220,12 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         dialeg.setVisible(true);
         refrescarTaula();
     }//GEN-LAST:event_jMenuItemCrearJocActionPerformed
+
+    private void jMenuItemEsborrarJocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEsborrarJocActionPerformed
+        DialegEsborrarJoc dialeg = new DialegEsborrarJoc(this, true);
+        dialeg.setVisible(true);
+        refrescarTaula();
+    }//GEN-LAST:event_jMenuItemEsborrarJocActionPerformed
 
     private void jButtonRegistrarLloguerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarLloguerActionPerformed
         obrirRegistreLloguer();
