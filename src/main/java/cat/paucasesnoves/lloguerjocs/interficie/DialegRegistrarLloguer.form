@@ -101,9 +101,17 @@
                           <Component id="jTextFieldNumero" pref="120" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jLabelUsuari" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxUsuari" alignment="0" pref="200" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jComboBoxUsuari" pref="200" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButtonSeleccionarUsuari" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="jLabelJoc" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxJoc" alignment="0" pref="200" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jComboBoxJoc" pref="200" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButtonSeleccionarJoc" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="jLabelDataInici" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldDataInici" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabelDataTornada" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -124,11 +132,17 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabelUsuari" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jComboBoxUsuari" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jComboBoxUsuari" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonSeleccionarUsuari" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabelJoc" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jComboBoxJoc" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jComboBoxJoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonSeleccionarJoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabelDataInici" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -171,6 +185,16 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
+        <Component class="javax.swing.JButton" name="jButtonSeleccionarUsuari">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="cat/paucasesnoves/lloguerjocs/interficie/Bundle.properties" key="DialegRegistrarLloguer.jButtonSeleccionarUsuari.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSeleccionarUsuariActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JLabel" name="jLabelJoc">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -185,6 +209,16 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonSeleccionarJoc">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="cat/paucasesnoves/lloguerjocs/interficie/Bundle.properties" key="DialegRegistrarLloguer.jButtonSeleccionarJoc.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSeleccionarJocActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDataInici">
           <Properties>

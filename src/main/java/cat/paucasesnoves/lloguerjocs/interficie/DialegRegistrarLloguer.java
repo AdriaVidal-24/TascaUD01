@@ -8,6 +8,7 @@ import cat.paucasesnoves.lloguerjocs.logica.ExcepcioLloguer;
 import cat.paucasesnoves.lloguerjocs.logica.LogicaNegoci;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -114,8 +115,10 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         jTextFieldNumero = new javax.swing.JTextField();
         jLabelUsuari = new javax.swing.JLabel();
         jComboBoxUsuari = new javax.swing.JComboBox<>();
+        jButtonSeleccionarUsuari = new javax.swing.JButton();
         jLabelJoc = new javax.swing.JLabel();
         jComboBoxJoc = new javax.swing.JComboBox<>();
+        jButtonSeleccionarJoc = new javax.swing.JButton();
         jLabelDataInici = new javax.swing.JLabel();
         jTextFieldDataInici = new javax.swing.JTextField();
         jLabelDataTornada = new javax.swing.JLabel();
@@ -161,9 +164,15 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
 
         jComboBoxUsuari.addItemListener(this::jComboBoxUsuariItemStateChanged);
 
+        jButtonSeleccionarUsuari.setText(bundle.getString("DialegRegistrarLloguer.jButtonSeleccionarUsuari.text"));
+        jButtonSeleccionarUsuari.addActionListener(this::jButtonSeleccionarUsuariActionPerformed);
+
         jLabelJoc.setText(bundle.getString("DialegRegistrarLloguer.jLabelJoc.text"));
 
         jComboBoxJoc.addItemListener(this::jComboBoxJocItemStateChanged);
+
+        jButtonSeleccionarJoc.setText(bundle.getString("DialegRegistrarLloguer.jButtonSeleccionarJoc.text"));
+        jButtonSeleccionarJoc.addActionListener(this::jButtonSeleccionarJocActionPerformed);
 
         jLabelDataInici.setText(bundle.getString("DialegRegistrarLloguer.jLabelDataInici.text"));
 
@@ -187,9 +196,15 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                     .addComponent(jLabelUsuari)
-                    .addComponent(jComboBoxUsuari, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addGroup(jPanelDadesLayout.createSequentialGroup()
+                        .addComponent(jComboBoxUsuari, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonSeleccionarUsuari))
                     .addComponent(jLabelJoc)
-                    .addComponent(jComboBoxJoc, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addGroup(jPanelDadesLayout.createSequentialGroup()
+                        .addComponent(jComboBoxJoc, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonSeleccionarJoc))
                     .addComponent(jLabelDataInici)
                     .addComponent(jTextFieldDataInici, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelDataTornada)
@@ -206,11 +221,15 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelUsuari)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelDadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSeleccionarUsuari))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelJoc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxJoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelDadesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxJoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSeleccionarJoc))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelDataInici)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -450,6 +469,32 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jComboBoxJocItemStateChanged
 
+    private void jButtonSeleccionarUsuariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarUsuariActionPerformed
+        List<String> noms = new ArrayList<>();
+        for (Usuari usuari : usuaris) {
+            noms.add(usuari.getNomComplet() + " (" + usuari.getDni() + ")");
+        }
+        DialegSeleccio dialeg = new DialegSeleccio(this, true);
+        dialeg.setElements(textos.getString("DialegSeleccio.titolUsuari"), noms);
+        dialeg.setVisible(true);
+        if (dialeg.getIndexSeleccionat() != -1) {
+            jComboBoxUsuari.setSelectedIndex(dialeg.getIndexSeleccionat());
+        }
+    }//GEN-LAST:event_jButtonSeleccionarUsuariActionPerformed
+
+    private void jButtonSeleccionarJocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarJocActionPerformed
+        List<String> titols = new ArrayList<>();
+        for (Joc joc : jocs) {
+            titols.add(joc.getTitol());
+        }
+        DialegSeleccio dialeg = new DialegSeleccio(this, true);
+        dialeg.setElements(textos.getString("DialegSeleccio.titolJoc"), titols);
+        dialeg.setVisible(true);
+        if (dialeg.getIndexSeleccionat() != -1) {
+            jComboBoxJoc.setSelectedIndex(dialeg.getIndexSeleccionat());
+        }
+    }//GEN-LAST:event_jButtonSeleccionarJocActionPerformed
+
     private void jRadioButtonPs5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPs5ActionPerformed
         actualitzarBotoConfirmar();
     }//GEN-LAST:event_jRadioButtonPs5ActionPerformed
@@ -491,6 +536,8 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroupPlataformes;
     private javax.swing.JButton jButtonCancellar;
     private javax.swing.JButton jButtonConfirmar;
+    private javax.swing.JButton jButtonSeleccionarJoc;
+    private javax.swing.JButton jButtonSeleccionarUsuari;
     private javax.swing.JComboBox<String> jComboBoxJoc;
     private javax.swing.JComboBox<String> jComboBoxUsuari;
     private javax.swing.JLabel jLabelAvis;
