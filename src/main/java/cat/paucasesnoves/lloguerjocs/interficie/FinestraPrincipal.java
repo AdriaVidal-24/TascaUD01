@@ -94,6 +94,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jMenuJoc.setText(bundle.getString("FinestraPrincipal.jMenuJoc.text"));
 
         jMenuItemCrearJoc.setText(bundle.getString("FinestraPrincipal.jMenuItemCrearJoc.text"));
+        jMenuItemCrearJoc.addActionListener(this::jMenuItemCrearJocActionPerformed);
         jMenuJoc.add(jMenuItemCrearJoc);
 
         jMenuItemEsborrarJoc.setText(bundle.getString("FinestraPrincipal.jMenuItemEsborrarJoc.text"));
@@ -141,6 +142,12 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         dialeg.setVisible(true);
         refrescarTaula();
     }//GEN-LAST:event_jMenuItemCrearUsuariActionPerformed
+
+    private void jMenuItemCrearJocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearJocActionPerformed
+        DialegCrearJoc dialeg = new DialegCrearJoc(this, true);
+        dialeg.setVisible(true);
+        refrescarTaula();
+    }//GEN-LAST:event_jMenuItemCrearJocActionPerformed
 
     public static void main(String args[]) {
         Locale.setDefault(Locale.forLanguageTag("ca-ES"));
