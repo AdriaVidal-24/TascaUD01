@@ -2,6 +2,7 @@ package cat.paucasesnoves.lloguerjocs.interficie;
 
 import cat.paucasesnoves.lloguerjocs.dto.Lloguer;
 import cat.paucasesnoves.lloguerjocs.interficie.models.ModelTaulaLloguers;
+import cat.paucasesnoves.lloguerjocs.interficie.models.RenderitzadorEstat;
 import cat.paucasesnoves.lloguerjocs.logica.LogicaNegoci;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
 
     public FinestraPrincipal() {
         initComponents();
+        jTableLloguers.setDefaultRenderer(Object.class, new RenderitzadorEstat());
         refrescarTaula();
     }
 
