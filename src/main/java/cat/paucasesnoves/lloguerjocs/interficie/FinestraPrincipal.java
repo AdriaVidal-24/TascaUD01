@@ -23,6 +23,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/cat/paucasesnoves/lloguerjocs/imatges/app.png")).getImage());
         jTableLloguers.setDefaultRenderer(Object.class, new RenderitzadorEstat());
+        marcarIdiomaActual();
         refrescarTaula();
     }
 
@@ -70,10 +71,33 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         refrescarTaula();
     }
 
+    private void marcarIdiomaActual() {
+        String idioma = Locale.getDefault().getLanguage();
+        jRadioButtonMenuItemCatala.setSelected(idioma.equals("ca"));
+        jRadioButtonMenuItemCastella.setSelected(idioma.equals("es"));
+        jRadioButtonMenuItemAngles.setSelected(idioma.equals("en"));
+    }
+
+    private void canviarIdioma(String etiqueta) {
+        if (Locale.getDefault().toLanguageTag().equals(etiqueta)) {
+            return;
+        }
+        establirIdioma(Locale.forLanguageTag(etiqueta));
+        dispose();
+        FinestraPrincipal finestra = new FinestraPrincipal();
+        finestra.setVisible(true);
+    }
+
+    private static void establirIdioma(Locale idioma) {
+        Locale.setDefault(idioma);
+        ResourceBundle.clearCache();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupIdiomes = new javax.swing.ButtonGroup();
         jLabelTitol = new javax.swing.JLabel();
         jButtonRegistrarLloguer = new javax.swing.JButton();
         jButtonRegistrarDevolucio = new javax.swing.JButton();
@@ -91,6 +115,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jMenuJoc = new javax.swing.JMenu();
         jMenuItemCrearJoc = new javax.swing.JMenuItem();
         jMenuItemEsborrarJoc = new javax.swing.JMenuItem();
+        jMenuIdioma = new javax.swing.JMenu();
+        jRadioButtonMenuItemCatala = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItemCastella = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItemAngles = new javax.swing.JRadioButtonMenuItem();
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("cat/paucasesnoves/lloguerjocs/interficie/Bundle");
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -151,6 +179,25 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jMenuJoc.add(jMenuItemEsborrarJoc);
 
         jMenuBarPrincipal.add(jMenuJoc);
+
+        jMenuIdioma.setText(bundle.getString("FinestraPrincipal.jMenuIdioma.text"));
+
+        buttonGroupIdiomes.add(jRadioButtonMenuItemCatala);
+        jRadioButtonMenuItemCatala.setText(bundle.getString("FinestraPrincipal.jRadioButtonMenuItemCatala.text"));
+        jRadioButtonMenuItemCatala.addActionListener(this::jRadioButtonMenuItemCatalaActionPerformed);
+        jMenuIdioma.add(jRadioButtonMenuItemCatala);
+
+        buttonGroupIdiomes.add(jRadioButtonMenuItemCastella);
+        jRadioButtonMenuItemCastella.setText(bundle.getString("FinestraPrincipal.jRadioButtonMenuItemCastella.text"));
+        jRadioButtonMenuItemCastella.addActionListener(this::jRadioButtonMenuItemCastellaActionPerformed);
+        jMenuIdioma.add(jRadioButtonMenuItemCastella);
+
+        buttonGroupIdiomes.add(jRadioButtonMenuItemAngles);
+        jRadioButtonMenuItemAngles.setText(bundle.getString("FinestraPrincipal.jRadioButtonMenuItemAngles.text"));
+        jRadioButtonMenuItemAngles.addActionListener(this::jRadioButtonMenuItemAnglesActionPerformed);
+        jMenuIdioma.add(jRadioButtonMenuItemAngles);
+
+        jMenuBarPrincipal.add(jMenuIdioma);
 
         setJMenuBar(jMenuBarPrincipal);
 
@@ -227,6 +274,18 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         refrescarTaula();
     }//GEN-LAST:event_jMenuItemEsborrarJocActionPerformed
 
+    private void jRadioButtonMenuItemCatalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemCatalaActionPerformed
+        canviarIdioma("ca-ES");
+    }//GEN-LAST:event_jRadioButtonMenuItemCatalaActionPerformed
+
+    private void jRadioButtonMenuItemCastellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemCastellaActionPerformed
+        canviarIdioma("es-ES");
+    }//GEN-LAST:event_jRadioButtonMenuItemCastellaActionPerformed
+
+    private void jRadioButtonMenuItemAnglesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemAnglesActionPerformed
+        canviarIdioma("en-GB");
+    }//GEN-LAST:event_jRadioButtonMenuItemAnglesActionPerformed
+
     private void jButtonRegistrarLloguerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarLloguerActionPerformed
         obrirRegistreLloguer();
     }//GEN-LAST:event_jButtonRegistrarLloguerActionPerformed
@@ -236,7 +295,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRegistrarDevolucioActionPerformed
 
     public static void main(String args[]) {
-        Locale.setDefault(Locale.forLanguageTag("ca-ES"));
+        establirIdioma(Locale.forLanguageTag("ca-ES"));
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -252,12 +311,14 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupIdiomes;
     private javax.swing.JButton jButtonRegistrarDevolucio;
     private javax.swing.JButton jButtonRegistrarLloguer;
     private javax.swing.JLabel jLabelResum;
     private javax.swing.JLabel jLabelTitol;
     private javax.swing.JLabel jLabelTotal;
     private javax.swing.JMenuBar jMenuBarPrincipal;
+    private javax.swing.JMenu jMenuIdioma;
     private javax.swing.JMenuItem jMenuItemCrearJoc;
     private javax.swing.JMenuItem jMenuItemCrearUsuari;
     private javax.swing.JMenuItem jMenuItemEsborrarJoc;
@@ -267,6 +328,9 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuJoc;
     private javax.swing.JMenu jMenuLloguer;
     private javax.swing.JMenu jMenuUsuari;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemAngles;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemCastella;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemCatala;
     private javax.swing.JScrollPane jScrollPaneLloguers;
     private javax.swing.JTable jTableLloguers;
     // End of variables declaration//GEN-END:variables
