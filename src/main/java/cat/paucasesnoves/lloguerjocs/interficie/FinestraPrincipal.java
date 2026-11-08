@@ -8,6 +8,7 @@ import cat.paucasesnoves.lloguerjocs.logica.LogicaNegoci;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.swing.ImageIcon;
 
 public class FinestraPrincipal extends javax.swing.JFrame {
 
@@ -18,6 +19,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
 
     public FinestraPrincipal() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/cat/paucasesnoves/lloguerjocs/imatges/app.png")).getImage());
         jTableLloguers.setDefaultRenderer(Object.class, new RenderitzadorEstat());
         refrescarTaula();
     }
