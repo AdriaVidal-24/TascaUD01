@@ -7,6 +7,7 @@ import cat.paucasesnoves.lloguerjocs.interficie.models.RenderitzadorEstat;
 import cat.paucasesnoves.lloguerjocs.logica.LogicaNegoci;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 
@@ -135,6 +136,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
+        Locale.setDefault(Locale.forLanguageTag("ca-ES"));
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
