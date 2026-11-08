@@ -1,12 +1,25 @@
 package cat.paucasesnoves.lloguerjocs.interficie;
 
+import cat.paucasesnoves.lloguerjocs.dto.Lloguer;
+import cat.paucasesnoves.lloguerjocs.interficie.models.ModelTaulaLloguers;
+import cat.paucasesnoves.lloguerjocs.logica.LogicaNegoci;
+import java.util.List;
 
 public class FinestraPrincipal extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FinestraPrincipal.class.getName());
 
+    private ModelTaulaLloguers modelTaula;
+
     public FinestraPrincipal() {
         initComponents();
+        refrescarTaula();
+    }
+
+    private void refrescarTaula() {
+        List<Lloguer> lloguers = LogicaNegoci.getLloguers();
+        modelTaula = new ModelTaulaLloguers(lloguers);
+        jTableLloguers.setModel(modelTaula);
     }
 
     @SuppressWarnings("unchecked")
