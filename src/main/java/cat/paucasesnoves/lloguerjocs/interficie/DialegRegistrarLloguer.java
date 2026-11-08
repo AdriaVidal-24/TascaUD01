@@ -59,7 +59,7 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
 
     private Plataforma getPlataformaSeleccionada() {
         for (int i = 0; i < radios.length; i++) {
-            if (radios[i].isSelected()) {
+            if (radios[i].isSelected() && radios[i].isEnabled()) {
                 return plataformes[i];
             }
         }
@@ -69,14 +69,21 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
     private void actualitzarPlataformes() {
         Joc joc = getJocSeleccionat();
         buttonGroupPlataformes.clearSelection();
+        boolean primerSeleccionat = false;
         for (int i = 0; i < plataformes.length; i++) {
+            int disponibles = joc == null ? 0 : joc.getUnitatsDisponibles(plataformes[i]);
+            radios[i].setEnabled(disponibles > 0);
+            etiquetesDisponibles[i].setEnabled(disponibles > 0);
             if (joc == null || !joc.teLaPlataforma(plataformes[i])) {
                 etiquetesDisponibles[i].setText(textos.getString("DialegRegistrarLloguer.noDisponible"));
                 etiquetesUnitats[i].setText("-");
             } else {
-                int disponibles = joc.getUnitatsDisponibles(plataformes[i]);
                 etiquetesDisponibles[i].setText(MessageFormat.format(textos.getString("DialegRegistrarLloguer.unitatsDisponibles"), disponibles));
                 etiquetesUnitats[i].setText(disponibles + " / " + joc.getUnitatsTotals(plataformes[i]));
+            }
+            if (disponibles > 0 && !primerSeleccionat) {
+                radios[i].setSelected(true);
+                primerSeleccionat = true;
             }
         }
         if (joc == null) {
@@ -84,6 +91,17 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         } else {
             jLabelValorGenere.setText(textos.getString(joc.getGenere().getClau()));
         }
+        if (joc != null && !primerSeleccionat) {
+            jLabelAvis.setText(textos.getString("DialegRegistrarLloguer.senseEstoc"));
+        } else {
+            jLabelAvis.setText(" ");
+        }
+        actualitzarBotoConfirmar();
+    }
+
+    private void actualitzarBotoConfirmar() {
+        jButtonConfirmar.setEnabled(getUsuariSeleccionat() != null && getJocSeleccionat() != null
+                && getPlataformaSeleccionada() != null);
     }
 
     @SuppressWarnings("unchecked")
@@ -111,6 +129,7 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         jLabelDisponiblesXbox = new javax.swing.JLabel();
         jRadioButtonPc = new javax.swing.JRadioButton();
         jLabelDisponiblesPc = new javax.swing.JLabel();
+        jLabelAvis = new javax.swing.JLabel();
         jPanelInfo = new javax.swing.JPanel();
         jLabelGenere = new javax.swing.JLabel();
         jLabelValorGenere = new javax.swing.JLabel();
@@ -139,6 +158,8 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         jTextFieldNumero.setEnabled(false);
 
         jLabelUsuari.setText(bundle.getString("DialegRegistrarLloguer.jLabelUsuari.text"));
+
+        jComboBoxUsuari.addItemListener(this::jComboBoxUsuariItemStateChanged);
 
         jLabelJoc.setText(bundle.getString("DialegRegistrarLloguer.jLabelJoc.text"));
 
@@ -205,27 +226,34 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
 
         buttonGroupPlataformes.add(jRadioButtonPs5);
         jRadioButtonPs5.setText(bundle.getString("DialegRegistrarLloguer.jRadioButtonPs5.text"));
+        jRadioButtonPs5.addActionListener(this::jRadioButtonPs5ActionPerformed);
 
         jLabelDisponiblesPs5.setForeground(new java.awt.Color(102, 102, 102));
         jLabelDisponiblesPs5.setText(bundle.getString("DialegRegistrarLloguer.jLabelDisponiblesPs5.text"));
 
         buttonGroupPlataformes.add(jRadioButtonSwitch2);
         jRadioButtonSwitch2.setText(bundle.getString("DialegRegistrarLloguer.jRadioButtonSwitch2.text"));
+        jRadioButtonSwitch2.addActionListener(this::jRadioButtonSwitch2ActionPerformed);
 
         jLabelDisponiblesSwitch2.setForeground(new java.awt.Color(102, 102, 102));
         jLabelDisponiblesSwitch2.setText(bundle.getString("DialegRegistrarLloguer.jLabelDisponiblesSwitch2.text"));
 
         buttonGroupPlataformes.add(jRadioButtonXbox);
         jRadioButtonXbox.setText(bundle.getString("DialegRegistrarLloguer.jRadioButtonXbox.text"));
+        jRadioButtonXbox.addActionListener(this::jRadioButtonXboxActionPerformed);
 
         jLabelDisponiblesXbox.setForeground(new java.awt.Color(102, 102, 102));
         jLabelDisponiblesXbox.setText(bundle.getString("DialegRegistrarLloguer.jLabelDisponiblesXbox.text"));
 
         buttonGroupPlataformes.add(jRadioButtonPc);
         jRadioButtonPc.setText(bundle.getString("DialegRegistrarLloguer.jRadioButtonPc.text"));
+        jRadioButtonPc.addActionListener(this::jRadioButtonPcActionPerformed);
 
         jLabelDisponiblesPc.setForeground(new java.awt.Color(102, 102, 102));
         jLabelDisponiblesPc.setText(bundle.getString("DialegRegistrarLloguer.jLabelDisponiblesPc.text"));
+
+        jLabelAvis.setForeground(new java.awt.Color(180, 40, 40));
+        jLabelAvis.setText(bundle.getString("DialegRegistrarLloguer.jLabelAvis.text"));
 
         javax.swing.GroupLayout jPanelPlataformaLayout = new javax.swing.GroupLayout(jPanelPlataforma);
         jPanelPlataforma.setLayout(jPanelPlataformaLayout);
@@ -245,7 +273,8 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
                             .addComponent(jLabelDisponiblesPs5)
                             .addComponent(jLabelDisponiblesSwitch2)
                             .addComponent(jLabelDisponiblesXbox)
-                            .addComponent(jLabelDisponiblesPc))))
+                            .addComponent(jLabelDisponiblesPc)))
+                    .addComponent(jLabelAvis))
                 .addContainerGap())
         );
         jPanelPlataformaLayout.setVerticalGroup(
@@ -267,6 +296,8 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
                 .addGroup(jPanelPlataformaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonPc)
                     .addComponent(jLabelDisponiblesPc))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelAvis)
                 .addContainerGap())
         );
 
@@ -407,11 +438,33 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBoxUsuariItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxUsuariItemStateChanged
+        if (radios != null) {
+            actualitzarBotoConfirmar();
+        }
+    }//GEN-LAST:event_jComboBoxUsuariItemStateChanged
+
     private void jComboBoxJocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxJocItemStateChanged
         if (radios != null && evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             actualitzarPlataformes();
         }
     }//GEN-LAST:event_jComboBoxJocItemStateChanged
+
+    private void jRadioButtonPs5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPs5ActionPerformed
+        actualitzarBotoConfirmar();
+    }//GEN-LAST:event_jRadioButtonPs5ActionPerformed
+
+    private void jRadioButtonSwitch2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSwitch2ActionPerformed
+        actualitzarBotoConfirmar();
+    }//GEN-LAST:event_jRadioButtonSwitch2ActionPerformed
+
+    private void jRadioButtonXboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonXboxActionPerformed
+        actualitzarBotoConfirmar();
+    }//GEN-LAST:event_jRadioButtonXboxActionPerformed
+
+    private void jRadioButtonPcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPcActionPerformed
+        actualitzarBotoConfirmar();
+    }//GEN-LAST:event_jRadioButtonPcActionPerformed
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         Usuari usuari = getUsuariSeleccionat();
@@ -440,6 +493,7 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
     private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JComboBox<String> jComboBoxJoc;
     private javax.swing.JComboBox<String> jComboBoxUsuari;
+    private javax.swing.JLabel jLabelAvis;
     private javax.swing.JLabel jLabelDataInici;
     private javax.swing.JLabel jLabelDataTornada;
     private javax.swing.JLabel jLabelDisponiblesPc;
