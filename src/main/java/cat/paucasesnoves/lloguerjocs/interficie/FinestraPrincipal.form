@@ -27,6 +27,9 @@
                   <ResourceString bundle="cat/paucasesnoves/lloguerjocs/interficie/Bundle.properties" key="FinestraPrincipal.jMenuItemTornarLloguer.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemTornarLloguerActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -118,6 +121,8 @@
                       <Component id="jLabelTitol" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jButtonRegistrarLloguer" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonRegistrarDevolucio" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPaneLloguers" alignment="0" pref="900" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -137,6 +142,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelTitol" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonRegistrarLloguer" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonRegistrarDevolucio" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPaneLloguers" pref="330" max="32767" attributes="0"/>
@@ -180,6 +186,19 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegistrarLloguerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRegistrarDevolucio">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/cat/paucasesnoves/lloguerjocs/imatges/retornar.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="cat/paucasesnoves/lloguerjocs/interficie/Bundle.properties" key="FinestraPrincipal.jButtonRegistrarDevolucio.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegistrarDevolucioActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPaneLloguers">

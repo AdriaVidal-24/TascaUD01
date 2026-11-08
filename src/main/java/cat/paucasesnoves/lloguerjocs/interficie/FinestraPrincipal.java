@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class FinestraPrincipal extends javax.swing.JFrame {
 
@@ -54,12 +55,28 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         refrescarTaula();
     }
 
+    private void obrirDevolucio() {
+        if (LogicaNegoci.getLloguersPendents().isEmpty()) {
+            JOptionPane.showMessageDialog(this, textos.getString("FinestraPrincipal.senseLloguersPendents"),
+                    textos.getString("comu.informacio"), JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        DialegTornarLloguer dialeg = new DialegTornarLloguer(this, true);
+        Lloguer seleccionat = getLloguerSeleccionat();
+        if (seleccionat != null && !seleccionat.isRetornat()) {
+            dialeg.preseleccionar(seleccionat);
+        }
+        dialeg.setVisible(true);
+        refrescarTaula();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabelTitol = new javax.swing.JLabel();
         jButtonRegistrarLloguer = new javax.swing.JButton();
+        jButtonRegistrarDevolucio = new javax.swing.JButton();
         jScrollPaneLloguers = new javax.swing.JScrollPane();
         jTableLloguers = new javax.swing.JTable();
         jLabelTotal = new javax.swing.JLabel();
@@ -88,6 +105,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jButtonRegistrarLloguer.setText(bundle.getString("FinestraPrincipal.jButtonRegistrarLloguer.text"));
         jButtonRegistrarLloguer.addActionListener(this::jButtonRegistrarLloguerActionPerformed);
 
+        jButtonRegistrarDevolucio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cat/paucasesnoves/lloguerjocs/imatges/retornar.png")));
+        jButtonRegistrarDevolucio.setText(bundle.getString("FinestraPrincipal.jButtonRegistrarDevolucio.text"));
+        jButtonRegistrarDevolucio.addActionListener(this::jButtonRegistrarDevolucioActionPerformed);
+
         jScrollPaneLloguers.setViewportView(jTableLloguers);
 
         jLabelTotal.setText(bundle.getString("FinestraPrincipal.jLabelTotal.text"));
@@ -102,6 +123,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jMenuLloguer.add(jMenuItemRegistrarLloguer);
 
         jMenuItemTornarLloguer.setText(bundle.getString("FinestraPrincipal.jMenuItemTornarLloguer.text"));
+        jMenuItemTornarLloguer.addActionListener(this::jMenuItemTornarLloguerActionPerformed);
         jMenuLloguer.add(jMenuItemTornarLloguer);
 
         jMenuBarPrincipal.add(jMenuLloguer);
@@ -140,7 +162,9 @@ public class FinestraPrincipal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelTitol)
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonRegistrarLloguer))
+                        .addComponent(jButtonRegistrarLloguer)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonRegistrarDevolucio))
                     .addComponent(jScrollPaneLloguers, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelTotal)
@@ -154,7 +178,8 @@ public class FinestraPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTitol)
-                    .addComponent(jButtonRegistrarLloguer))
+                    .addComponent(jButtonRegistrarLloguer)
+                    .addComponent(jButtonRegistrarDevolucio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneLloguers, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -172,6 +197,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         obrirRegistreLloguer();
     }//GEN-LAST:event_jMenuItemRegistrarLloguerActionPerformed
 
+    private void jMenuItemTornarLloguerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTornarLloguerActionPerformed
+        obrirDevolucio();
+    }//GEN-LAST:event_jMenuItemTornarLloguerActionPerformed
+
     private void jMenuItemCrearUsuariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearUsuariActionPerformed
         DialegCrearUsuari dialeg = new DialegCrearUsuari(this, true);
         dialeg.setVisible(true);
@@ -187,6 +216,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     private void jButtonRegistrarLloguerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarLloguerActionPerformed
         obrirRegistreLloguer();
     }//GEN-LAST:event_jButtonRegistrarLloguerActionPerformed
+
+    private void jButtonRegistrarDevolucioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarDevolucioActionPerformed
+        obrirDevolucio();
+    }//GEN-LAST:event_jButtonRegistrarDevolucioActionPerformed
 
     public static void main(String args[]) {
         Locale.setDefault(Locale.forLanguageTag("ca-ES"));
@@ -205,6 +238,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonRegistrarDevolucio;
     private javax.swing.JButton jButtonRegistrarLloguer;
     private javax.swing.JLabel jLabelResum;
     private javax.swing.JLabel jLabelTitol;
