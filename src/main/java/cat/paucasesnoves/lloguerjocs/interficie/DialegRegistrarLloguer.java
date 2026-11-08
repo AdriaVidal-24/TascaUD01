@@ -45,6 +45,7 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         calendari.add(Calendar.DAY_OF_MONTH, Lloguer.DIES_LLOGUER);
         jTextFieldDataTornada.setText(sdf.format(calendari.getTime()));
         actualitzarPlataformes();
+        pack();
         setLocationRelativeTo(parent);
     }
 
@@ -52,6 +53,8 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         jComboBoxUsuari.setSelectedIndex(usuaris.indexOf(usuari));
         jComboBoxJoc.setSelectedIndex(jocs.indexOf(joc));
         actualitzarPlataformes();
+        pack();
+        setLocationRelativeTo(getParent());
     }
 
     private Joc getJocSeleccionat() {
