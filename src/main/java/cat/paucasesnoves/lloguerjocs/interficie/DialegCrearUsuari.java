@@ -8,6 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.builtin.stringvalidation.ValidacioDni;
+import org.netbeans.validation.api.builtin.stringvalidation.ValidacioMajuscula;
+import org.netbeans.validation.api.builtin.stringvalidation.ValidacioTelefon;
+import org.netbeans.validation.api.ui.ValidationGroup;
 
 public class DialegCrearUsuari extends javax.swing.JDialog {
 
@@ -20,6 +27,28 @@ public class DialegCrearUsuari extends javax.swing.JDialog {
         initComponents();
         jTextFieldDataRegistre.setText(sdf.format(dataRegistre));
 
+        ValidationGroup group = validationPanel.getValidationGroup();
+        group.add(jTextFieldNom, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldNom, new ValidacioMajuscula());
+        group.add(jTextFieldLlinatge1, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldLlinatge1, new ValidacioMajuscula());
+        group.add(jTextFieldLlinatge2, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldLlinatge2, new ValidacioMajuscula());
+        group.add(jTextFieldDni, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldDni, new ValidacioDni());
+        group.add(jTextFieldTelefon, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldTelefon, new ValidacioTelefon());
+
+        validationPanel.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (validationPanel.getProblem() == null) {
+                    jButtonConfirmar.setEnabled(true);
+                } else {
+                    jButtonConfirmar.setEnabled(false);
+                }
+            }
+        });
         setLocationRelativeTo(parent);
     }
 
@@ -27,6 +56,7 @@ public class DialegCrearUsuari extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
         jLabelNom = new javax.swing.JLabel();
         jTextFieldNom = new javax.swing.JTextField();
         jLabelLlinatge1 = new javax.swing.JLabel();
@@ -77,6 +107,7 @@ public class DialegCrearUsuari extends javax.swing.JDialog {
         jLabelObligatoris.setText(bundle.getString("DialegCrearUsuari.jLabelObligatoris.text"));
 
         jButtonConfirmar.setBackground(new java.awt.Color(86, 150, 86));
+        jButtonConfirmar.setEnabled(false);
         jButtonConfirmar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cat/paucasesnoves/lloguerjocs/imatges/confirmar.png")));
         jButtonConfirmar.setText(bundle.getString("DialegCrearUsuari.jButtonConfirmar.text"));
@@ -93,6 +124,7 @@ public class DialegCrearUsuari extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(validationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelNom)
@@ -121,6 +153,8 @@ public class DialegCrearUsuari extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNom)
                     .addComponent(jTextFieldNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -157,6 +191,9 @@ public class DialegCrearUsuari extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
+        if (validationPanel.getProblem() != null) {
+            return;
+        }
         Usuari usuari = new Usuari(jTextFieldNom.getText().trim(), jTextFieldLlinatge1.getText().trim(),
                 jTextFieldLlinatge2.getText().trim(), jTextFieldDni.getText().trim().toUpperCase(),
                 jTextFieldTelefon.getText().trim(), dataRegistre);
@@ -191,5 +228,6 @@ public class DialegCrearUsuari extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldLlinatge2;
     private javax.swing.JTextField jTextFieldNom;
     private javax.swing.JTextField jTextFieldTelefon;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables
 }
