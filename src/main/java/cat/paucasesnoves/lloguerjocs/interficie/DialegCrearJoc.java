@@ -8,6 +8,7 @@ import cat.paucasesnoves.lloguerjocs.logica.LogicaNegoci;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
@@ -22,12 +23,14 @@ public class DialegCrearJoc extends javax.swing.JDialog {
     private Plataforma[] plataformes = Plataforma.values();
     private Genere[] generes = Genere.values();
     private JCheckBox[] caselles;
+    private JLabel[] etiquetes;
     private JSpinner[] spinners;
 
     public DialegCrearJoc(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         caselles = new JCheckBox[]{jCheckBoxPs5, jCheckBoxSwitch2, jCheckBoxXbox, jCheckBoxPc};
+        etiquetes = new JLabel[]{jLabelUnitatsPs5, jLabelUnitatsSwitch2, jLabelUnitatsXbox, jLabelUnitatsPc};
         spinners = new JSpinner[]{jSpinnerPs5, jSpinnerSwitch2, jSpinnerXbox, jSpinnerPc};
         for (Genere genere : generes) {
             jComboBoxGenere.addItem(textos.getString(genere.getClau()));
@@ -48,6 +51,13 @@ public class DialegCrearJoc extends javax.swing.JDialog {
             }
         });
         setLocationRelativeTo(parent);
+    }
+
+    private void actualitzarPlataformes() {
+        for (int i = 0; i < caselles.length; i++) {
+            etiquetes[i].setEnabled(caselles[i].isSelected());
+            spinners[i].setEnabled(caselles[i].isSelected());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -90,27 +100,39 @@ public class DialegCrearJoc extends javax.swing.JDialog {
         jPanelPlataformes.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("DialegCrearJoc.jPanelPlataformes.border.title")));
 
         jCheckBoxPs5.setText(bundle.getString("DialegCrearJoc.jCheckBoxPs5.text"));
+        jCheckBoxPs5.addItemListener(this::jCheckBoxPs5ItemStateChanged);
 
+        jLabelUnitatsPs5.setEnabled(false);
         jLabelUnitatsPs5.setText(bundle.getString("DialegCrearJoc.jLabelUnitatsPs5.text"));
 
+        jSpinnerPs5.setEnabled(false);
         jSpinnerPs5.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
 
         jCheckBoxSwitch2.setText(bundle.getString("DialegCrearJoc.jCheckBoxSwitch2.text"));
+        jCheckBoxSwitch2.addItemListener(this::jCheckBoxSwitch2ItemStateChanged);
 
+        jLabelUnitatsSwitch2.setEnabled(false);
         jLabelUnitatsSwitch2.setText(bundle.getString("DialegCrearJoc.jLabelUnitatsSwitch2.text"));
 
+        jSpinnerSwitch2.setEnabled(false);
         jSpinnerSwitch2.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
 
         jCheckBoxXbox.setText(bundle.getString("DialegCrearJoc.jCheckBoxXbox.text"));
+        jCheckBoxXbox.addItemListener(this::jCheckBoxXboxItemStateChanged);
 
+        jLabelUnitatsXbox.setEnabled(false);
         jLabelUnitatsXbox.setText(bundle.getString("DialegCrearJoc.jLabelUnitatsXbox.text"));
 
+        jSpinnerXbox.setEnabled(false);
         jSpinnerXbox.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
 
         jCheckBoxPc.setText(bundle.getString("DialegCrearJoc.jCheckBoxPc.text"));
+        jCheckBoxPc.addItemListener(this::jCheckBoxPcItemStateChanged);
 
+        jLabelUnitatsPc.setEnabled(false);
         jLabelUnitatsPc.setText(bundle.getString("DialegCrearJoc.jLabelUnitatsPc.text"));
 
+        jSpinnerPc.setEnabled(false);
         jSpinnerPc.setModel(new javax.swing.SpinnerNumberModel(1, 1, 99, 1));
 
         javax.swing.GroupLayout jPanelPlataformesLayout = new javax.swing.GroupLayout(jPanelPlataformes);
@@ -231,6 +253,22 @@ public class DialegCrearJoc extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCheckBoxPs5ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxPs5ItemStateChanged
+        actualitzarPlataformes();
+    }//GEN-LAST:event_jCheckBoxPs5ItemStateChanged
+
+    private void jCheckBoxSwitch2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxSwitch2ItemStateChanged
+        actualitzarPlataformes();
+    }//GEN-LAST:event_jCheckBoxSwitch2ItemStateChanged
+
+    private void jCheckBoxXboxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxXboxItemStateChanged
+        actualitzarPlataformes();
+    }//GEN-LAST:event_jCheckBoxXboxItemStateChanged
+
+    private void jCheckBoxPcItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxPcItemStateChanged
+        actualitzarPlataformes();
+    }//GEN-LAST:event_jCheckBoxPcItemStateChanged
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         if (validationPanel.getProblem() != null) {
