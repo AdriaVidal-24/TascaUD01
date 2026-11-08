@@ -38,6 +38,16 @@ public class LogicaNegoci {
         return ordenats;
     }
 
+    public static List<Lloguer> getLloguersPendents() {
+        List<Lloguer> pendents = new ArrayList<>();
+        for (Lloguer lloguer : getLloguers()) {
+            if (!lloguer.isRetornat()) {
+                pendents.add(lloguer);
+            }
+        }
+        return pendents;
+    }
+
     public static int getSeguentNumero() {
         return darrerNumero + 1;
     }
@@ -50,6 +60,35 @@ public class LogicaNegoci {
             }
         }
         return total;
+    }
+
+    public static Lloguer registrarLloguer(Usuari usuari, Joc joc, Plataforma plataforma) throws ExcepcioLloguer {
+        if (usuari == null || joc == null || plataforma == null) {
+            throw new ExcepcioLloguer("error.lloguer.dadesIncompletes");
+        }
+        if (!joc.teLaPlataforma(plataforma)) {
+            throw new ExcepcioLloguer("error.lloguer.plataformaNoDisponible");
+        }
+        if (joc.getUnitatsDisponibles(plataforma) <= 0) {
+            throw new ExcepcioLloguer("error.lloguer.senseEstoc");
+        }
+        for (Lloguer lloguer : llistaLloguers) {
+            if (!lloguer.isRetornat() && lloguer.getUsuari() == usuari && lloguer.getJoc() == joc) {
+                throw new ExcepcioLloguer("error.lloguer.duplicat");
+            }
+        }
+        return crearLloguer(usuari, joc, plataforma, new Date());
+    }
+
+    public static void registrarDevolucio(Lloguer lloguer) throws ExcepcioLloguer {
+        if (lloguer == null) {
+            throw new ExcepcioLloguer("error.devolucio.senseSeleccio");
+        }
+        if (lloguer.isRetornat()) {
+            throw new ExcepcioLloguer("error.devolucio.jaRetornat");
+        }
+        lloguer.setDataRetorn(new Date());
+        lloguer.getJoc().retornarUnitat(lloguer.getPlataforma());
     }
 
     private static Lloguer crearLloguer(Usuari usuari, Joc joc, Plataforma plataforma, Date dataInici) {
