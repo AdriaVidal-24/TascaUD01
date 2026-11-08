@@ -83,6 +83,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jMenuUsuari.setText(bundle.getString("FinestraPrincipal.jMenuUsuari.text"));
 
         jMenuItemCrearUsuari.setText(bundle.getString("FinestraPrincipal.jMenuItemCrearUsuari.text"));
+        jMenuItemCrearUsuari.addActionListener(this::jMenuItemCrearUsuariActionPerformed);
         jMenuUsuari.add(jMenuItemCrearUsuari);
 
         jMenuItemEsborrarUsuari.setText(bundle.getString("FinestraPrincipal.jMenuItemEsborrarUsuari.text"));
@@ -134,6 +135,12 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemCrearUsuariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearUsuariActionPerformed
+        DialegCrearUsuari dialeg = new DialegCrearUsuari(this, true);
+        dialeg.setVisible(true);
+        refrescarTaula();
+    }//GEN-LAST:event_jMenuItemCrearUsuariActionPerformed
 
     public static void main(String args[]) {
         Locale.setDefault(Locale.forLanguageTag("ca-ES"));
