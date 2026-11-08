@@ -36,8 +36,20 @@ public class FinestraPrincipal extends javax.swing.JFrame {
                 LogicaNegoci.comptarLloguers(EstatLloguer.RETORNAT)));
     }
 
+    private Lloguer getLloguerSeleccionat() {
+        int fila = jTableLloguers.getSelectedRow();
+        if (fila == -1) {
+            return null;
+        }
+        return modelTaula.getLloguer(fila);
+    }
+
     private void obrirRegistreLloguer() {
         DialegRegistrarLloguer dialeg = new DialegRegistrarLloguer(this, true);
+        Lloguer seleccionat = getLloguerSeleccionat();
+        if (seleccionat != null) {
+            dialeg.preseleccionar(seleccionat.getUsuari(), seleccionat.getJoc());
+        }
         dialeg.setVisible(true);
         refrescarTaula();
     }

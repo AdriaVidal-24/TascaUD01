@@ -48,6 +48,12 @@ public class DialegRegistrarLloguer extends javax.swing.JDialog {
         setLocationRelativeTo(parent);
     }
 
+    public void preseleccionar(Usuari usuari, Joc joc) {
+        jComboBoxUsuari.setSelectedIndex(usuaris.indexOf(usuari));
+        jComboBoxJoc.setSelectedIndex(jocs.indexOf(joc));
+        actualitzarPlataformes();
+    }
+
     private Joc getJocSeleccionat() {
         int index = jComboBoxJoc.getSelectedIndex();
         return index == -1 ? null : jocs.get(index);
