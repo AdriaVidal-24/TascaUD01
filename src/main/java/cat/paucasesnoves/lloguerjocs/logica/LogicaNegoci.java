@@ -62,6 +62,61 @@ public class LogicaNegoci {
         return total;
     }
 
+    public static int comptarLloguersActius(Usuari usuari) {
+        int total = 0;
+        for (Lloguer lloguer : llistaLloguers) {
+            if (!lloguer.isRetornat() && lloguer.getUsuari() == usuari) {
+                total++;
+            }
+        }
+        return total;
+    }
+
+    public static int comptarLloguersActius(Joc joc) {
+        int total = 0;
+        for (Lloguer lloguer : llistaLloguers) {
+            if (!lloguer.isRetornat() && lloguer.getJoc() == joc) {
+                total++;
+            }
+        }
+        return total;
+    }
+
+    public static void afegirUsuari(Usuari usuari) throws ExcepcioLloguer {
+        for (Usuari existent : llistaUsuaris) {
+            if (existent.getDni().equalsIgnoreCase(usuari.getDni())) {
+                throw new ExcepcioLloguer("error.usuari.dniRepetit");
+            }
+        }
+        llistaUsuaris.add(usuari);
+    }
+
+    public static void eliminarUsuari(Usuari usuari) throws ExcepcioLloguer {
+        if (comptarLloguersActius(usuari) > 0) {
+            throw new ExcepcioLloguer("error.usuari.lloguersActius");
+        }
+        llistaUsuaris.remove(usuari);
+    }
+
+    public static void afegirJoc(Joc joc) throws ExcepcioLloguer {
+        if (!joc.teAlgunaPlataforma()) {
+            throw new ExcepcioLloguer("error.joc.sensePlataformes");
+        }
+        for (Joc existent : llistaJocs) {
+            if (existent.getTitol().equalsIgnoreCase(joc.getTitol())) {
+                throw new ExcepcioLloguer("error.joc.titolRepetit");
+            }
+        }
+        llistaJocs.add(joc);
+    }
+
+    public static void eliminarJoc(Joc joc) throws ExcepcioLloguer {
+        if (comptarLloguersActius(joc) > 0) {
+            throw new ExcepcioLloguer("error.joc.lloguersActius");
+        }
+        llistaJocs.remove(joc);
+    }
+
     public static Lloguer registrarLloguer(Usuari usuari, Joc joc, Plataforma plataforma) throws ExcepcioLloguer {
         if (usuari == null || joc == null || plataforma == null) {
             throw new ExcepcioLloguer("error.lloguer.dadesIncompletes");
