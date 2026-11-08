@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 public class FinestraPrincipal extends javax.swing.JFrame {
 
@@ -91,6 +92,11 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     private static void establirIdioma(Locale idioma) {
         Locale.setDefault(idioma);
         ResourceBundle.clearCache();
+        ResourceBundle textos = ResourceBundle.getBundle("cat/paucasesnoves/lloguerjocs/interficie/Bundle");
+        UIManager.put("OptionPane.yesButtonText", textos.getString("comu.si"));
+        UIManager.put("OptionPane.noButtonText", textos.getString("comu.no"));
+        UIManager.put("OptionPane.okButtonText", textos.getString("comu.acceptar"));
+        UIManager.put("OptionPane.cancelButtonText", textos.getString("comu.cancellar"));
     }
 
     @SuppressWarnings("unchecked")
