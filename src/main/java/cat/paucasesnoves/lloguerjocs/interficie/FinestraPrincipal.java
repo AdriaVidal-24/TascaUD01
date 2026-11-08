@@ -36,11 +36,18 @@ public class FinestraPrincipal extends javax.swing.JFrame {
                 LogicaNegoci.comptarLloguers(EstatLloguer.RETORNAT)));
     }
 
+    private void obrirRegistreLloguer() {
+        DialegRegistrarLloguer dialeg = new DialegRegistrarLloguer(this, true);
+        dialeg.setVisible(true);
+        refrescarTaula();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabelTitol = new javax.swing.JLabel();
+        jButtonRegistrarLloguer = new javax.swing.JButton();
         jScrollPaneLloguers = new javax.swing.JScrollPane();
         jTableLloguers = new javax.swing.JTable();
         jLabelTotal = new javax.swing.JLabel();
@@ -63,6 +70,12 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jLabelTitol.setFont(jLabelTitol.getFont().deriveFont(jLabelTitol.getFont().getStyle() | java.awt.Font.BOLD, jLabelTitol.getFont().getSize()+4));
         jLabelTitol.setText(bundle.getString("FinestraPrincipal.jLabelTitol.text"));
 
+        jButtonRegistrarLloguer.setBackground(new java.awt.Color(86, 150, 86));
+        jButtonRegistrarLloguer.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonRegistrarLloguer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cat/paucasesnoves/lloguerjocs/imatges/afegir.png")));
+        jButtonRegistrarLloguer.setText(bundle.getString("FinestraPrincipal.jButtonRegistrarLloguer.text"));
+        jButtonRegistrarLloguer.addActionListener(this::jButtonRegistrarLloguerActionPerformed);
+
         jScrollPaneLloguers.setViewportView(jTableLloguers);
 
         jLabelTotal.setText(bundle.getString("FinestraPrincipal.jLabelTotal.text"));
@@ -73,6 +86,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         jMenuLloguer.setText(bundle.getString("FinestraPrincipal.jMenuLloguer.text"));
 
         jMenuItemRegistrarLloguer.setText(bundle.getString("FinestraPrincipal.jMenuItemRegistrarLloguer.text"));
+        jMenuItemRegistrarLloguer.addActionListener(this::jMenuItemRegistrarLloguerActionPerformed);
         jMenuLloguer.add(jMenuItemRegistrarLloguer);
 
         jMenuItemTornarLloguer.setText(bundle.getString("FinestraPrincipal.jMenuItemTornarLloguer.text"));
@@ -111,7 +125,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTitol)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelTitol)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonRegistrarLloguer))
                     .addComponent(jScrollPaneLloguers, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelTotal)
@@ -123,7 +140,9 @@ public class FinestraPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelTitol)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTitol)
+                    .addComponent(jButtonRegistrarLloguer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPaneLloguers, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -137,6 +156,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItemRegistrarLloguerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistrarLloguerActionPerformed
+        obrirRegistreLloguer();
+    }//GEN-LAST:event_jMenuItemRegistrarLloguerActionPerformed
+
     private void jMenuItemCrearUsuariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCrearUsuariActionPerformed
         DialegCrearUsuari dialeg = new DialegCrearUsuari(this, true);
         dialeg.setVisible(true);
@@ -148,6 +171,10 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         dialeg.setVisible(true);
         refrescarTaula();
     }//GEN-LAST:event_jMenuItemCrearJocActionPerformed
+
+    private void jButtonRegistrarLloguerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarLloguerActionPerformed
+        obrirRegistreLloguer();
+    }//GEN-LAST:event_jButtonRegistrarLloguerActionPerformed
 
     public static void main(String args[]) {
         Locale.setDefault(Locale.forLanguageTag("ca-ES"));
@@ -166,6 +193,7 @@ public class FinestraPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonRegistrarLloguer;
     private javax.swing.JLabel jLabelResum;
     private javax.swing.JLabel jLabelTitol;
     private javax.swing.JLabel jLabelTotal;
