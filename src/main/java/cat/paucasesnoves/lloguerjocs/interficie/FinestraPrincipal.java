@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 
 public class FinestraPrincipal extends javax.swing.JFrame {
@@ -24,6 +25,8 @@ public class FinestraPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setIconImage(new ImageIcon(getClass().getResource("/cat/paucasesnoves/lloguerjocs/imatges/app.png")).getImage());
         jTableLloguers.setDefaultRenderer(Object.class, new RenderitzadorEstat());
+        jTableLloguers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableLloguers.getTableHeader().setReorderingAllowed(false);
         marcarIdiomaActual();
         refrescarTaula();
     }

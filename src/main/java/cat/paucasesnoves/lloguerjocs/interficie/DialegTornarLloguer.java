@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -25,6 +26,8 @@ public class DialegTornarLloguer extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         jTableLloguers.setDefaultRenderer(Object.class, new RenderitzadorEstat());
+        jTableLloguers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableLloguers.getTableHeader().setReorderingAllowed(false);
         jTableLloguers.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {

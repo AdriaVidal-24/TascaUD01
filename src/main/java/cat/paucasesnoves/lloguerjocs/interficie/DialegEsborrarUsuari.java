@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -19,6 +20,8 @@ public class DialegEsborrarUsuari extends javax.swing.JDialog {
     public DialegEsborrarUsuari(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jTableUsuaris.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTableUsuaris.getTableHeader().setReorderingAllowed(false);
         jTableUsuaris.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
