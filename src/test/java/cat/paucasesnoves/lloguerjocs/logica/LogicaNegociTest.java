@@ -3,12 +3,15 @@ package cat.paucasesnoves.lloguerjocs.logica;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cat.paucasesnoves.lloguerjocs.dto.EstatLloguer;
+import cat.paucasesnoves.lloguerjocs.dto.Genere;
 import cat.paucasesnoves.lloguerjocs.dto.Joc;
 import cat.paucasesnoves.lloguerjocs.dto.Lloguer;
 import cat.paucasesnoves.lloguerjocs.dto.Plataforma;
 import cat.paucasesnoves.lloguerjocs.dto.Usuari;
+import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -69,6 +72,11 @@ public class LogicaNegociTest {
     }
 
     @Test
+    public void noEsPotDuplicarUnLloguerActiu() {
+        assertThrows(ExcepcioLloguer.class, () -> LogicaNegoci.registrarLloguer(usuari("Joan"), joc("EA Sports FC 25"), Plataforma.PS5));
+    }
+
+    @Test
     public void noEsPotEsborrarAmbLloguersActius() throws ExcepcioLloguer {
         assertThrows(ExcepcioLloguer.class, () -> LogicaNegoci.eliminarUsuari(usuari("Marta")));
         assertThrows(ExcepcioLloguer.class, () -> LogicaNegoci.eliminarJoc(joc("Forza Horizon 5")));
@@ -77,4 +85,16 @@ public class LogicaNegociTest {
         assertFalse(LogicaNegoci.getUsuaris().contains(aina));
     }
 
+    @Test
+    public void noEsPotRepetirElDniNiElTitol() throws ExcepcioLloguer {
+        Usuari repetit = new Usuari("Pere", "Mas", "Coll", "43123456C", "611111111", new Date());
+        assertThrows(ExcepcioLloguer.class, () -> LogicaNegoci.afegirUsuari(repetit));
+        Joc nou = new Joc("Hades II", Genere.ACCIO);
+        nou.afegirUnitats(Plataforma.PC, 2);
+        LogicaNegoci.afegirJoc(nou);
+        assertTrue(LogicaNegoci.getJocs().contains(nou));
+        Joc repetitJoc = new Joc("minecraft", Genere.AVENTURA);
+        repetitJoc.afegirUnitats(Plataforma.PC, 1);
+        assertThrows(ExcepcioLloguer.class, () -> LogicaNegoci.afegirJoc(repetitJoc));
+    }
 }
